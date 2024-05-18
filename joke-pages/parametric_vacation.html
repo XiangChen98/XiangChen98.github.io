@@ -17,7 +17,7 @@
             margin: 0 auto;
         }
 
-        .cruiseIcon {
+        #iconDiv img {
             width: 200px;
         }
 
@@ -53,7 +53,7 @@
 
 <body>
     <div class="content">
-        <img class="restIcon" width="300px" src="./vacation/resting.png" alt="rest icon">
+        <div id="iconDiv"></div>
         <h1>Countdown Vacanze: </h1>
         <h2 id="countDownTime"></h1>
         <h3></h3>
@@ -62,25 +62,31 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const timeParam = urlParams.get('time');
+        const imageParam = urlParams.get('img');
         const endDate = new Date(timeParam * 1000).getTime();
+        
+        var img = document.createElement("img");
+        img.src = imageParam ? "./vacation/" + imageParam : "./vacation/resting.png";
+        var src = document.getElementById("iconDiv");
+        src.appendChild(img);
 
         var x = setInterval(function() {
-          var nowDate = new Date().getTime();
-          var timeDiff = endDate - nowDate;
+            var nowDate = new Date().getTime();
+            var timeDiff = endDate - nowDate;
 
-          var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-          var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-          var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-            
-          document.getElementById("countDownTime").innerHTML = days + "g " + hours + "o "
-          + minutes + "m " + seconds + "s ";
-            
-          // If the count down is over, write some text 
-          if (timeDiff < 0) {
-            clearInterval(x);
-            document.getElementById("countDownTime").innerHTML = "Buone Vacanze!";
-          }
+            var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+                
+            document.getElementById("countDownTime").innerHTML = days + "g " + hours + "o "
+            + minutes + "m " + seconds + "s ";
+                
+            // If the count down is over, write some text 
+            if (timeDiff < 0) {
+                clearInterval(x);
+                document.getElementById("countDownTime").innerHTML = "Buone Vacanze!";
+            }
         }, 1000);
     </script>
 </body>
